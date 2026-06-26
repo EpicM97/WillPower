@@ -16,8 +16,8 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 | ID | Story | Size | Status |
 |----|-------|------|--------|
 | 0.1 | Initialize git + baseline commit | S | ✅ |
-| 0.2 | Stand up CI (GitHub Actions macOS or Xcode Cloud) running `make test` | M | 🔵 |
-| 0.3 | **Remove the budget engine** — `BudgetRecalculator`, `DayWindow` budget, `HabitKind`/anchored, interruption injector, `MinutesField`/`MinutesInput`, compression, discipline-as-budget, the budget card/“min to go” UI. Keep tests green. | L | 🔵 |
+| 0.2 | Stand up CI (GitHub Actions) running `make test`; repo public | M | ✅ |
+| 0.3 | **Remove the budget engine** — `BudgetRecalculator`, `DayWindow` budget, `HabitKind`/anchored, interruption injector, `MinutesField`/`MinutesInput`, compression, discipline-as-budget, the budget card/“min to go” UI. Keep tests green. | L | 🟡 in progress |
 | 0.4 | Wire the QC stack (XCTest keep + Maestro smoke harness) per QC doc | M | 🔵 |
 
 ## EPIC-1 — Habits & Routines (core loop)  *(Sprint 1)*
