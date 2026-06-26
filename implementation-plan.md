@@ -253,6 +253,6 @@ Strategic shift: WillPower differentiates as an **emotional memory vault**, not 
 
 ## Backlog / Ops
 - **AI habit-budget workflow (parked, big feature)**: Habits are streak items (did/didn't), not tasks — don't auto-defer (deferral/"Bumped" already removed in Phase 20.1). Leave the compression engine in `BudgetRecalculator` (the "(was XX)" shrink) AS-IS until this lands. Plan: (1) habit-config screen lets durations exceed budget (no blocking); user duration becomes the "(was XX)" bracket. (2) live "remaining budget" signal while editing. (3) post-config AI pass scans for over-budget and proposes a full revised duration list via interactive wizard — suggested value shown before the bracket, reusing the "XX (was YY)" display. (4) per-habit approve / keep-as-is before landing in Up next. (5) likely a post-onboarding tutorial + master habit-config input feeding Today. Discuss before building.
-- Manual: update Magic Link email template at https://supabase.com/dashboard/project/ymtmuvvvduzeflacwznp/auth/templates to use `{{ .Token }}`.
+- Manual: update Magic Link email template at `https://supabase.com/dashboard/project/<project-ref>/auth/templates` to use `{{ .Token }}`.
 - Periodic local tombstone prune (rows where `deletedAt < now - 30d`).
 - Live Activities 8-hour timeout recovery flow.

@@ -31,7 +31,7 @@ a *later* native port. That context rules some popular tools in and others out.
 | **XCTest** | Apple-official, ~decade | Universal — every iOS project | Trusted, boring-good | **A** | The foundation; non-negotiable |
 | **XCUITest** | Apple-official | De-facto standard for Apple-first teams | Reliable *but* well-known "flaky & slow" rep (~12 s/test) | **B+** | Standard; use sparingly for precision flows |
 | **Maestro** | 2021, mobile.dev, OSS | **~10.8k★**; used by **Microsoft, Meta** (RN E2E), **DoorDash**; free | "fastest path to a trustworthy suite in 2026"; low flakiness | **A−** | The market's modern favorite — adopt now |
-| **TestSprite** | New (2025–26) | Product Hunt **4.4/5** (5 reviews), 4.9k followers, #1 Product of the Day (May '26); free + paid | Positive but tiny sample ("10x'd my productivity") | **B− / trial** | Promising AI helper, unproven & cloud-based — pilot, don't depend |
+| **TestSprite** | New (2025–26) | Product Hunt **4.4/5** (5 reviews), 4.9k followers, #1 Product of the Day (May '26); free + paid | Positive but tiny sample ("10x'd my productivity") | **B−** | ❌ **Evaluated, not adopting for MVP** — early & cloud-based (privacy) |
 
 **Read:** Maestro is the clear modern winner with heavyweight adopters; XCTest/XCUITest are the trusted Apple baseline; TestSprite is hype-positive but *early* and runs in a cloud sandbox — pilot it, don't build the suite on it.
 
@@ -43,8 +43,7 @@ a *later* native port. That context rules some popular tools in and others out.
 3. **XCUITest** — a *small* set of precision native tests where Maestro is too coarse: **Face ID / PIN gate**, diary lock/unlock, notification permission.
 4. **CI**: GitHub Actions (macOS runner) or **Xcode Cloud** running `make test` + the Maestro suite on every push.
 
-**Trial (parallel, low commitment):**
-- **TestSprite via MCP in Claude Code** — let it draft Appium flows from the PRD as a productivity experiment. **Only against seeded/synthetic data**, never a real diary (see caveat). Keep it if the generated flows save real time; drop it if it's noise.
+**Evaluated, NOT adopting (decision 2026-06):** **TestSprite.** Genuinely interesting (AI test-gen + Claude Code MCP), but it's early/unproven (5 reviews) and **cloud-sandbox** — pointing any cloud tester at a privacy-vault app is a poor fit, and the AI-gen upside isn't worth the risk for MVP. Revisit post-MVP if needed.
 
 **Later:**
 - **Appium** — when **Android** lands, for a single cross-platform suite. Revisit Maestro-vs-Appium then.
