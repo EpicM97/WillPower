@@ -29,8 +29,7 @@ jobs:
       - name: Provide placeholder Supabase config
         # The real Supabase.xcconfig is gitignored; tests use mocks, so the
         # committed example (placeholder values) is enough for CI to build.
-        run: cp Sources/HabitTracker/Supabase/Supabase.example.xcconfig \
-                Sources/HabitTracker/Supabase/Supabase.xcconfig
+        run: cp Sources/HabitTracker/Supabase/Supabase.example.xcconfig Sources/HabitTracker/Supabase/Supabase.xcconfig
 
       - name: Pick an available simulator
         # Don't hardcode "iPhone 17" — use whatever the runner's Xcode ships.
