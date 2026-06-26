@@ -7,8 +7,11 @@ designed*, and *what's next*.
 docs/
 ├── product/
 │   ├── PRD.md              ⭐ Shared product brief & plan (vision, MOAT, features, roadmap) — edit together
-│   ├── backlog.md          Forward-looking work (budget-era — to be revised after the pivot)
-│   └── test-plan.md        Manual QA test pass (A-series flows, B-series regressions)
+│   ├── backlog.md          Product backlog (memory-vault MVP: epics → stories)
+│   └── test-plan.md        Manual QA test pass (legacy budget-era — to be refreshed)
+├── process/
+│   ├── scrum.md            SDLC + Scrum (cadence, DoR/DoD, sprint plan)
+│   └── qa-test-automation.md  QC tooling research & recommendation
 ├── architecture/
 │   ├── overview.md         Layers, tech stack, folder layout
 │   ├── tech-spec.md        Consolidated system design (the engineering reference)

@@ -1,70 +1,79 @@
 # Product Backlog
 
-Forward-looking only. Shipped history lives in
-[`implementation-plan.md`](../../implementation-plan.md). Strategic framing:
-WillPower is an **emotional memory vault**, commercializing toward $1M MRR →
-additive migrations, multi-tenant RLS, no silent data loss.
+Single ordered backlog for the **memory-vault MVP**. Derived from
+[`PRD.md`](PRD.md); managed per [`../process/scrum.md`](../process/scrum.md).
+Shipped history → [`../../implementation-plan.md`](../../implementation-plan.md).
 
-Status legend: 🟡 awaiting verification · 🔵 ready to build · ⚪ parked · 🟢 done-pending-signoff
+Status: 🔵 ready · 🟡 needs refinement · ✅ done · ⛔ blocked
+Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 
----
-
-## NOW — in your test pass (Phases 22–25, code complete, 176 tests green)
-These shipped this session and await your on-device sign-off (see
-[test-plan.md](test-plan.md)).
-
-| ID | Item | Status |
-|----|------|--------|
-| N1 | Day & budget settings — window start/end, decoupled budget, wind-down, nudges | 🟢 |
-| N2 | Anchored habits carry a clock time (editor time picker, synced) | 🟢 |
-| N3 | Evening = dismissible "Wind down" prompt (8 PM takeover retired) | 🟢 |
-| N4 | Journal notes E2EE (Keychain key, ciphertext at rest + in sync) | 🟢 |
-| N5 | Memories surface (On-This-Day + recent reflections) | 🟢 |
-| N6 | Prod hardening — DEBUG-gated dev tools; auto sync + rollover on foreground | 🟢 |
-
-**Two decisions made on your behalf while you were away — confirm or veto:**
-- **D-E2EE:** journal key is device-Keychain-only (no iCloud). Reinstall without a Keychain restore ⇒ past notes unreadable (shown as "locked", never lost-silently). Veto → switch to iCloud Keychain sync for recoverability. See [ADR-002](../architecture/decisions.md).
-- **D-Sunset:** "wind-down else sunset" → sunset **not** built (needs latitude we won't collect; no GPS). Wind-down defaults to *day-end − 60 min*. See [ADR-003](../architecture/decisions.md).
+> The old budget-era backlog was replaced wholesale on the 2026-06 pivot. Budget
+> engine is being **scrapped**, not extended.
 
 ---
 
-## NEXT — small, owed follow-ups
-| ID | Item | Notes |
-|----|------|-------|
-| X1 | **Anchored timeline placement** | Anchored habits store/sync `anchorMinuteOfDay` but the deck doesn't yet *sort* by it. Build a clock-ordered view or interleave anchors into Up-next by time. 🔵 |
-| X2 | Budget live-refresh while app open | Budget is read on `.task` + tab re-show; editing it in another tab updates on return, not instantly. Acceptable now; revisit if it feels stale. 🔵 |
-| X3 | True sunset wind-down (conditional) | Only if users ask. Would need an opt-in coarse-location or city picker. ⚪ |
+## EPIC-0 — Foundation & teardown  *(Sprint 0)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 0.1 | Initialize git + baseline commit | S | ✅ |
+| 0.2 | Stand up CI (GitHub Actions macOS or Xcode Cloud) running `make test` | M | 🔵 |
+| 0.3 | **Remove the budget engine** — `BudgetRecalculator`, `DayWindow` budget, `HabitKind`/anchored, interruption injector, `MinutesField`/`MinutesInput`, compression, discipline-as-budget, the budget card/“min to go” UI. Keep tests green. | L | 🔵 |
+| 0.4 | Wire the QC stack (XCTest keep + Maestro smoke harness) per QC doc | M | 🔵 |
+
+## EPIC-1 — Habits & Routines (core loop)  *(Sprint 1)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 1.1 | `Habit` model reshape: `type` (check-in \| count), `category` (health \| lifestyle), `routines: [Routine]`, optional location. Drop budget fields. | M | 🔵 |
+| 1.2 | `Routine` = time-of-day bucket (Morning/Noon/Afternoon/Evening); a habit can be in 1+. | S | 🔵 |
+| 1.3 | Today screen: habits grouped by routine bucket; check-off + count increment. | M | 🔵 |
+| 1.4 | Streaks + completion % per habit. | M | 🔵 |
+| 1.5 | Reminders/notifications per habit. | M | 🔵 |
+| 1.6 | Add/edit/archive habit (clean add-flow; learn from competitors' add-button placement). | M | 🔵 |
+
+**Acceptance (epic):** create a habit, see it under the right routine, check it off, watch the streak grow; survives relaunch.
+
+## EPIC-2 — Mood  *(Sprint 2)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 2.1 | `Mood` model: 5-pt scale (Euphoric>Happy>Neutral>Sad>Horrible). | S | 🔵 |
+| 2.2 | Capture mood after a routine is completed + optional note. | M | 🔵 |
+| 2.3 | Surface mood in end-of-day flow + stats. | S | 🟡 |
+
+## EPIC-3 — Private diary (E2EE + Face ID)  *(Sprint 2)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 3.1 | Reuse `JournalCrypto`/`JournalKeyStore`; confirm AES-GCM + Secure-Enclave key. | S | 🔵 |
+| 3.2 | **Face ID / PIN gate** (LocalAuthentication) to open the diary. | M | 🔵 |
+| 3.3 | Diary entry composer with image attachments (encrypted at rest). | L | 🟡 |
+
+## EPIC-4 — On-this-day & Memories  *(Sprint 3)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 4.1 | Reuse `OnThisDaySelector` + `MemoriesView`; rewind by creation date / first achievement / memory. | M | 🔵 |
+
+## EPIC-5 — Statistics  *(Sprint 3)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 5.1 | Native (not web-view) stats: habit performance + mood, daily/weekly/monthly/yearly. | L | 🔵 |
+
+## EPIC-6 — Theme switcher  *(Sprint 3)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 6.1 | Reuse background/theme system: stock themes + local photos + light/dark. | M | 🔵 |
+
+## EPIC-7 — On-device recall plumbing (MVP foundation for V1 AI)  *(Sprint 3, stretch)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| 7.1 | Embed diary entries on-device (Apple `NaturalLanguage`); store vectors in `sqlite-vec`; local-only. | L | 🟡 |
+| 7.2 | Semantic search over entries (no LLM yet) powering recall. | M | 🟡 |
 
 ---
 
-## LATER — parked (north-star; do not build until core loop retains)
-| ID | Item | Notes |
-|----|------|-------|
-| L1 | **On-device journal AI** | Gemma/Llama-class (MLX/Core ML/llama.cpp), **zero network egress**. Correlate felt(journal) × did(habits): pattern surfacing, semantic recall, mood inference, year-in-review. No provider API for journal data — ever. ⚪ |
-| L2 | Journal **share-grant** decryption | Owner can grant specific people read access. The only sanctioned decrypt path beyond the owner. ⚪ |
-| L3 | Family-sharing + posthumous handoff | The vault's emotional moat narrative. ⚪ |
-| L4 | Opt-in **server** journal AI | Clearly-labeled future toggle, never default. ⚪ |
-| L5 | **AI habit-budget workflow** | Big feature. Durations may exceed budget (no blocking); user duration → "(was XX)" bracket; live remaining-budget signal while editing; post-config AI pass proposes a revised duration list via wizard; per-habit approve. Leave the compression engine as-is until this lands. Discuss before building. ⚪ |
-| L6 | iCloud-Keychain journal-key recoverability | Trade some privacy for "don't lose notes on reinstall." Only if D-E2EE is vetoed. ⚪ |
+## Later (post-MVP — from PRD tiers, not yet refined)
+- **V1:** Projects/Goals (OKR, reuse models) · Widgets · **on-device LLM assistant** (MLX, over EPIC-7 plumbing) · **cloud sync** (premium; diary ciphertext-only; cross-device key via iCloud Keychain).
+- **V2:** Friends/social + tiered sharing (envelope encryption) · 3rd-party integrations · white noise · countdown · quote-of-day · **lock-in mode** (Screen Time / FamilyControls) · **Android** (native Compose).
 
----
-
-## OPEN QA — flows not yet walked through (see test-plan.md)
-| ID | Flow | Status |
-|----|------|--------|
-| B5 | Energy/kind sync round-trip (delete-app → reinstall → re-pull) | 🟡 |
-| A1 | Today — drag-reorder Up next persists across reload | 🟡 |
-| A2 | Work tab — OKR flow (Objective → KR → Project → Milestone/Task) | 🟡 |
-| A3 | Brain dump / voice ingestion (capture → proposal → apply) | 🟡 |
-| A4 | Profile editor (view/edit, email change) | 🟡 |
-
----
-
-## OPS / CHORES
-| ID | Item | Notes |
-|----|------|-------|
-| O1 | Magic-link email template | Set to `{{ .Token }}` in Supabase dashboard. User action. |
-| O2 | Stock background images | Drop curated Unsplash images into `supabase/storage/backgrounds/stock/`, run `make backgrounds-upload`. User action. |
-| O3 | Tombstone prune | Periodically delete local rows where `deletedAt < now − 30d`. |
-| O4 | Live Activity 8-hour timeout recovery | Long-running habits exceed the LA cap. |
-| O5 | `GEMINI_API_KEY` secret | `make supabase-secret-set NAME=GEMINI_API_KEY VALUE=…` for brain-dump LLM. User action. |
+## Open decisions (mirror of PRD log)
+- [x] Platform — native iOS-first, Android fast-follow.
+- [x] Diary — E2EE + Face ID.
+- [~] MVP single-device (sync = V1) — recommended; confirm at Sprint 2.
