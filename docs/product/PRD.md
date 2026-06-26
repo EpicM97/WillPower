@@ -136,6 +136,6 @@ Every credible app in this space ships these; we must too, but they win nothing 
 - [x] **Diary tech** — on-device E2EE + Face ID/PIN (blockchain dropped).
 - [x] **Architecture proposal** — drafted (`../architecture/architecture-proposal.md`) + summarized above.
 - [~] **Platform** — *recommended:* native iOS-first, Android fast-follow. **Needs your confirm/override** — this is the one that gates code work.
-- [~] **MVP cross-device** — *recommended:* single-device for MVP (sync = V1). Confirm.
+- [x] **MVP cross-device** — confirmed **single-device** for MVP (sync = V1).
 - [~] **Roadmap** — revised to "Q3 iOS, Android Q4–Q1" pending the platform call.
 - [ ] **Build refactor** — turn keep/rework/scrap into a sequenced MVP plan (next, after platform confirm).

@@ -76,4 +76,4 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 ## Open decisions (mirror of PRD log)
 - [x] Platform — native iOS-first, Android fast-follow.
 - [x] Diary — E2EE + Face ID.
-- [~] MVP single-device (sync = V1) — recommended; confirm at Sprint 2.
+- [x] MVP single-device (sync = V1) — confirmed.
