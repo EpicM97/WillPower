@@ -1,0 +1,15 @@
+# .claudeignore
+.git/
+.build/
+.swiftpm/
+DerivedData/
+*.xcodeproj/project.xcworkspace/
+*.xcassets/
+Pods/
+build/
+dist/
+node_modules/
+# Bỏ qua các file ảnh/media nặng
+*.png
+*.jpg
+*.pdf
