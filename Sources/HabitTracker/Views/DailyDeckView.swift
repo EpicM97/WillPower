@@ -10,7 +10,6 @@ struct DailyDeckView: View {
     )
     @State private var habitEditor: HabitEditorViewModel?
     @State private var showInjector: Bool = false
-    @State private var showReflection: Bool = false
     @State private var ingestion: IngestionViewModel?
     @State private var collapseUpNext = false
     @State private var collapseCompleted = false
@@ -45,31 +44,9 @@ struct DailyDeckView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) { brandHeader }
             }
-            .sheet(isPresented: $showReflection, onDismiss: {
-                Task { await viewModel.load() }
-            }) {
-                NavigationStack {
-                    EveningRitualView(viewModel: viewModel)
-                        .navigationTitle("Tonight")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Done") { showReflection = false }
-                            }
-                        }
-                }
-            }
             .task {
-                viewModel.availableMinutes = DayWindowStore().current.budgetMinutes
                 SessionGenerator.generate(in: modelContext)
                 await viewModel.load()
-            }
-            .onAppear {
-                // Budget is edited on another tab; pick up changes on return.
-                let budget = DayWindowStore().current.budgetMinutes
-                guard budget != viewModel.availableMinutes else { return }
-                viewModel.availableMinutes = budget
-                Task { await viewModel.load() }
             }
             .sheet(item: $habitEditor, onDismiss: {
                 SessionGenerator.generate(in: modelContext)
@@ -96,11 +73,6 @@ struct DailyDeckView: View {
     private var deckList: some View {
         ScrollViewReader { proxy in
             List {
-                if showEveningPrompt {
-                    Section { eveningPromptCard }
-                        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                }
-
                 Section {
                     budgetCard
                 }
@@ -208,62 +180,6 @@ struct DailyDeckView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-    }
-
-    @AppStorage("willpower.debug.forceEvening") private var debugForceEvening: Bool = false
-    @AppStorage("willpower.debug.forceDay") private var debugForceDay: Bool = false
-    /// Start-of-day timestamp the evening prompt was last dismissed on, so a
-    /// dismissal sticks for the rest of that day but resets the next morning.
-    @AppStorage("willpower.eveningPromptDismissedDay") private var eveningDismissedDay: Double = 0
-
-    /// Whether the evening reflection prompt should appear above the deck. Driven
-    /// by `EveningPromptPolicy` (wind-down time or all-resolved), suppressed once
-    /// dismissed today. Debug toggles force/suppress it for QA.
-    private var showEveningPrompt: Bool {
-        if debugForceDay { return false }
-        if eveningDismissedDay == todayStart { return false }
-        let now = Calendar.current.component(.hour, from: .now) * 60
-            + Calendar.current.component(.minute, from: .now)
-        let windDown = debugForceEvening ? 0 : DayWindowStore().current.resolvedWindDownMinute
-        let resolved = viewModel.completedSessions.filter { !$0.isInterruption }.count
-        let unresolved = (viewModel.upNextSessions + viewModel.goingOnSessions)
-            .filter { !$0.isInterruption }.count
-        return EveningPromptPolicy.shouldSurface(
-            nowMinute: now, windDownMinute: windDown,
-            resolvedCount: resolved, unresolvedCount: unresolved
-        )
-    }
-
-    private var todayStart: Double {
-        Calendar.current.startOfDay(for: .now).timeIntervalSince1970
-    }
-
-    /// A gentle, dismissible wind-down card — opens the reflection sheet, or can
-    /// be brushed away for the day. Never hijacks the screen.
-    private var eveningPromptCard: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "moon.stars.fill")
-                .font(.title3)
-                .foregroundStyle(.indigo)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Wind down").font(.subheadline.weight(.semibold))
-                Text("Take a minute to reflect on today.")
-                    .font(.caption).foregroundStyle(.secondary)
-            }
-            Spacer()
-            Button("Reflect") { showReflection = true }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.small)
-            Button {
-                eveningDismissedDay = todayStart
-            } label: {
-                Image(systemName: "xmark").font(.caption.weight(.bold))
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
-            .accessibilityLabel("Dismiss reflection prompt")
-        }
-        .padding(.vertical, 4)
     }
 
     private func sessionRow(_ s: DailySession) -> some View {

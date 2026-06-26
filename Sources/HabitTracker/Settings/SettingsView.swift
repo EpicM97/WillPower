@@ -9,34 +9,20 @@ struct SettingsView: View {
     @State private var syncStatus: String?
     @State private var syncing = false
     @State private var signingOut = false
-    @AppStorage("willpower.debug.forceEvening") private var debugForceEvening: Bool = false
-    @AppStorage("willpower.debug.forceDay") private var debugForceDay: Bool = false
 
     var body: some View {
         Form {
-            daySection
             syncSection
             #if DEBUG
             // Demo/debug controls are developer tooling — never shipped to users.
             // Rollover + sync run automatically (see HabitTrackerApp.onForeground).
             dataSection
-            debugSection
             #endif
             aboutSection
             signOutSection
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private var daySection: some View {
-        Section("Day") {
-            NavigationLink {
-                DayBudgetSettingsView()
-            } label: {
-                Label("Day & budget", systemImage: "sun.horizon")
-            }
-        }
     }
 
     private var syncSection: some View {
@@ -77,15 +63,6 @@ struct SettingsView: View {
             } label: {
                 Label("Run end-of-day rollover now", systemImage: "moon.stars")
             }
-        }
-    }
-
-    private var debugSection: some View {
-        Section("Debug") {
-            Toggle("Force evening ritual", isOn: $debugForceEvening)
-                .onChange(of: debugForceEvening) { _, new in if new { debugForceDay = false } }
-            Toggle("Force day mode", isOn: $debugForceDay)
-                .onChange(of: debugForceDay) { _, new in if new { debugForceEvening = false } }
         }
     }
 
