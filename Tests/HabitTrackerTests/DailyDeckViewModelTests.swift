@@ -214,17 +214,6 @@ final class DailyDeckViewModelTests: XCTestCase {
     }
 
     // Progress-bar fill fraction: spent/available, clamped to [0, 1].
-    func test_injectInterruption_storesChosenEnergyOnSession() async throws {
-        let repo = MockRepository()
-        let vm = DailyDeckViewModel(repository: repo)
-        await vm.load()
-        await vm.injectInterruption(title: "Phone call", energy: .high, expectedMinutes: 20)
-        let injected = vm.sessions.first { $0.isInterruption }
-        XCTAssertNotNil(injected)
-        XCTAssertEqual(injected?.energy, .high)
-        XCTAssertEqual(injected?.baseMinutes, 20)
-    }
-
     func test_budgetFraction_clampsAndGuardsZeroAvailable() {
         XCTAssertEqual(BudgetSnapshot.fraction(spent: 0, available: 120), 0, accuracy: 0.0001)
         XCTAssertEqual(BudgetSnapshot.fraction(spent: 60, available: 120), 0.5, accuracy: 0.0001)

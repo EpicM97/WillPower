@@ -95,19 +95,6 @@ final class DailyDeckViewModel {
         Task { try? await repository.save() }
     }
 
-    func injectInterruption(title: String, energy: EnergyLevel = .mid, expectedMinutes: Int) async {
-        let s = DailySession(
-            baseMinutes: expectedMinutes,
-            compressedMinutes: expectedMinutes,
-            isInterruption: true,
-            energy: energy,
-            orderHint: -1,
-            note: title.trimmingCharacters(in: .whitespaces).isEmpty ? nil : title
-        )
-        try? await repository.add(session: s)
-        await load()
-    }
-
     var todayDisciplineScore: Double? {
         DisciplineScorer.dayScore(sessions: sessions, atEndOfDay: false)
     }

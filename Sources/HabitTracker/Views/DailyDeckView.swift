@@ -9,7 +9,6 @@ struct DailyDeckView: View {
         controller: ActivityKitLiveActivityController()
     )
     @State private var habitEditor: HabitEditorViewModel?
-    @State private var showInjector: Bool = false
     @State private var ingestion: IngestionViewModel?
     @State private var collapseUpNext = false
     @State private var collapseCompleted = false
@@ -52,11 +51,6 @@ struct DailyDeckView: View {
                 SessionGenerator.generate(in: modelContext)
                 Task { await viewModel.load() }
             }) { vm in HabitEditorSheet(viewModel: vm) }
-            .sheet(isPresented: $showInjector) {
-                InterruptionInjectorSheet { title, energy, minutes in
-                    await viewModel.injectInterruption(title: title, energy: energy, expectedMinutes: minutes)
-                }
-            }
             .sheet(item: $ingestion, onDismiss: {
                 SessionGenerator.generate(in: modelContext)
                 Task { await viewModel.load() }
@@ -364,7 +358,6 @@ struct DailyDeckView: View {
     /// entry point for injecting an interruption, brain-dumping, or adding a habit.
     private var floatingAddMenu: some View {
         Menu {
-            Button("Inject interruption", systemImage: "bolt.fill") { showInjector = true }
             Button("Brain dump", systemImage: "sparkles") { startIngestion() }
             Button("Add habit", systemImage: "plus.circle") { startAddHabit() }
         } label: {
