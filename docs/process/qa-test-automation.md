@@ -24,6 +24,17 @@ a *later* native port. That context rules some popular tools in and others out.
 - **XCUITest** is Apple-native: fastest/most stable for pure iOS, but iOS-only and Swift-bound — perfect for the few flows that *must* be precise.
 - **Maestro** wins on setup cost and readability (YAML flows), runs locally, and already speaks both iOS and Android — so it survives the Android port.
 
+## How the market grades them (mid-2026)
+
+| Tool | Maturity | Adoption signal | Sentiment | Grade | Verdict |
+|---|---|---|---|---|---|
+| **XCTest** | Apple-official, ~decade | Universal — every iOS project | Trusted, boring-good | **A** | The foundation; non-negotiable |
+| **XCUITest** | Apple-official | De-facto standard for Apple-first teams | Reliable *but* well-known "flaky & slow" rep (~12 s/test) | **B+** | Standard; use sparingly for precision flows |
+| **Maestro** | 2021, mobile.dev, OSS | **~10.8k★**; used by **Microsoft, Meta** (RN E2E), **DoorDash**; free | "fastest path to a trustworthy suite in 2026"; low flakiness | **A−** | The market's modern favorite — adopt now |
+| **TestSprite** | New (2025–26) | Product Hunt **4.4/5** (5 reviews), 4.9k followers, #1 Product of the Day (May '26); free + paid | Positive but tiny sample ("10x'd my productivity") | **B− / trial** | Promising AI helper, unproven & cloud-based — pilot, don't depend |
+
+**Read:** Maestro is the clear modern winner with heavyweight adopters; XCTest/XCUITest are the trusted Apple baseline; TestSprite is hype-positive but *early* and runs in a cloud sandbox — pilot it, don't build the suite on it.
+
 ## Recommendation (phased)
 
 **Now (MVP, iOS) — adopt:**
