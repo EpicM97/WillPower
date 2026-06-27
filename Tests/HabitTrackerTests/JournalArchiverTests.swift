@@ -24,7 +24,7 @@ final class JournalArchiverTests: XCTestCase {
         XCTAssertEqual(unwrapped.completedCount, 1) // interruption excluded
         XCTAssertEqual(unwrapped.deferredCount, 1)
         XCTAssertEqual(unwrapped.interruptionCount, 1)
-        XCTAssertEqual(unwrapped.disciplineScore, 1.0, accuracy: 0.001) // single completed high-energy hit
+        XCTAssertEqual(unwrapped.disciplineScore, 0.0, accuracy: 0.001) // discipline scoring removed in pivot
     }
 
     func testArchive_idempotentForSameDay() throws {

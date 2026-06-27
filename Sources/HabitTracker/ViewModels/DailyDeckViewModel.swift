@@ -95,10 +95,6 @@ final class DailyDeckViewModel {
         Task { try? await repository.save() }
     }
 
-    var todayDisciplineScore: Double? {
-        DisciplineScorer.dayScore(sessions: sessions, atEndOfDay: false)
-    }
-
     func move(from source: IndexSet, to destination: Int) async {
         var pending = pendingSessions
         pending.move(fromOffsets: source, toOffset: destination)

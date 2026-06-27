@@ -206,11 +206,6 @@ final class DailyDeckViewModelTests: XCTestCase {
         let done = vm.completedSessions.first
         XCTAssertEqual(done?.actualMinutes, 3)
         XCTAssertEqual(done?.stoppedEarly, true)
-        // Proportional discipline score, not a full 1.0 and not 0.
-        let score = DisciplineScorer.score(for: done!)
-        XCTAssertNotNil(score)
-        XCTAssertLessThan(score!, 1.0)
-        XCTAssertGreaterThan(score!, 0.0)
     }
 
     // Progress-bar fill fraction: spent/available, clamped to [0, 1].

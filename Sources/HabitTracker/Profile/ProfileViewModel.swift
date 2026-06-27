@@ -4,7 +4,6 @@ import SwiftData
 @Observable @MainActor
 final class ProfileViewModel {
     private(set) var streakDays: Int = 0
-    private(set) var disciplineToday: Double? = nil
     private(set) var milestonesCompleted: Int = 0
     private(set) var todayHabitsCount: Int = 0
     private(set) var activeProjects: [Project] = []
@@ -18,12 +17,7 @@ final class ProfileViewModel {
     func load() async {
         let context = container.mainContext
         let sessions = (try? context.fetch(FetchDescriptor<DailySession>())) ?? []
-        streakDays = DisciplineScorer.streakDays(sessions: sessions)
-
-        let cal = Calendar.current
-        let todayStart = cal.startOfDay(for: .now)
-        let todaysSessions = sessions.filter { cal.isDate($0.date, inSameDayAs: todayStart) }
-        disciplineToday = DisciplineScorer.dayScore(sessions: todaysSessions, atEndOfDay: false)
+        streakDays = StreakCalculator.compute(sessions: sessions).currentStreak
 
         let milestones = (try? context.fetch(FetchDescriptor<Milestone>())) ?? []
         milestonesCompleted = milestones.filter { $0.deletedAt == nil && $0.isCompleted }.count
@@ -39,8 +33,4 @@ final class ProfileViewModel {
             .map { $0 }
     }
 
-    var disciplineTodayFormatted: String {
-        guard let d = disciplineToday else { return "—" }
-        return "\(Int(d * 100))%"
-    }
 }

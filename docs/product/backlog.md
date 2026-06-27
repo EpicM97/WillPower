@@ -17,8 +17,8 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 |----|-------|------|--------|
 | 0.1 | Initialize git + baseline commit | S | ✅ |
 | 0.2 | Stand up CI (GitHub Actions) running `make test`; repo public | M | ✅ |
-| 0.3 | **Remove the budget engine** — `BudgetRecalculator`, `DayWindow` budget, `HabitKind`/anchored, interruption injector, `MinutesField`/`MinutesInput`, compression, discipline-as-budget, the budget card/“min to go” UI. Keep tests green. | L | 🟡 in progress |
-| 0.4 | Wire the QC stack (XCTest keep + Maestro smoke harness) per QC doc | M | 🔵 |
+| 0.3 | **Remove the budget engine** — peripheral machinery (day-window/notifications/budget-settings, interruption injector, discipline scoring, evening prompt/ritual) removed across inc 1–4, all green. The **core** (`BudgetRecalculator`, `DailySession` budget shape, budget card/“min to go”, `HabitKind`/anchored, `MinutesField`/`MinutesInput`, compression) **folds into Sprint 1 §1.1** — it can't be deleted without the replacement model. | L | 🟡 core → S1 |
+| 0.4 | Wire the QC stack (XCTest keep + Maestro smoke harness) per QC doc | M | 🔵 owed |
 
 ## EPIC-1 — Habits & Routines (core loop)  *(Sprint 1)*
 | ID | Story | Size | Status |

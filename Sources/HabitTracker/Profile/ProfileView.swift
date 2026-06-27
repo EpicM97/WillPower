@@ -83,7 +83,6 @@ struct ProfileView: View {
     private var statsRow: some View {
         HStack(spacing: 12) {
             statCard(value: "\(viewModel?.streakDays ?? 0)", label: "Day streak", systemImage: "flame.fill", tint: .orange)
-            statCard(value: viewModel?.disciplineTodayFormatted ?? "—", label: "Discipline today", systemImage: "target", tint: .indigo)
             statCard(value: "\(viewModel?.milestonesCompleted ?? 0)", label: "Milestones", systemImage: "checkmark.seal.fill", tint: .green)
         }
     }

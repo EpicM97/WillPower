@@ -22,7 +22,9 @@ enum JournalArchiver {
         ))) ?? []
         guard !sessions.isEmpty else { return nil }
 
-        let score = DisciplineScorer.dayScore(sessions: sessions, atEndOfDay: true) ?? 0
+        // Discipline scoring removed in the pivot; the field is retained for
+        // sync compatibility and stays 0 until stats are redesigned (EPIC-5).
+        let score = 0.0
         let completed = sessions.filter { $0.status == .completed && !$0.isInterruption }.count
         let deferred = sessions.filter { $0.status == .deferred }.count
         let interruptions = sessions.filter { $0.isInterruption }.count
