@@ -7,7 +7,7 @@ lands its signed-off Figma frame link + resolved forks + token usage here
 [`../process/design-workflow.md`](../process/design-workflow.md). Benchmarks:
 TickTick, Habitify, Things3.
 
-- **Figma file:** _TBD — paste the WillPower Figma file URL here once created._
+- **Figma file:** [WillPower — Memory Vault MVP](https://www.figma.com/design/WNnD5652JVdsqKsK69oTS5) (`WNnD5652JVdsqKsK69oTS5`)
 - **Visual source of truth:** Figma. **This doc** translates it for SwiftUI.
 
 Status per screen: 🔵 design pending · ✏️ in design (Figma) · ✅ design locked → build.

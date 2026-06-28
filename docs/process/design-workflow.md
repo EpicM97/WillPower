@@ -10,9 +10,11 @@
 ```
 1. Requirements   PRD.md — vision, MOAT, the user outcome
         │
-2. UX design      Figma — flows → wireframes → hi-fi screens, on the design system
-        │         (Claude can generate frames into Figma via the MCP, or Minh
-        │          designs by hand — either way the PO signs off in step 3)
+2. UX design      Figma — flows → wireframes → hi-fi screens, on the design system.
+        │         Drive design quality with the **impeccable** skill (synthesize the
+        │         design language; /impeccable critique·audit·polish on frames).
+        │         Claude generates frames into Figma via the MCP, or Minh designs
+        │         by hand — either way the PO signs off in step 3.
         │
 3. Design review  PO (Minh) signs off the Figma frames; open forks resolved.
    & sign-off     Hard-to-reverse calls → ADR in architecture/decisions.md
@@ -41,6 +43,7 @@ design item is `✅` — meaning the Figma frame is signed off **and** its
 |---|---|---|
 | Visual design (flows, screens, hi-fi) | **Figma** | the Figma file |
 | Figma ↔ Claude (both ways) | **Figma MCP** (official hosted plugin, `mcp.figma.com/mcp`) | read **and** write/generate; see below |
+| Design fluency / critique | **impeccable** skill (`/impeccable polish·audit·critique`; 7-axis design-language synth) | design-taste guardrail — use on every UI/UX task |
 | Code-facing screen spec | `ui-spec.md` | this repo |
 | Implementation | SwiftUI | `Sources/` |
 | Design tokens | Figma variables → mirrored as Swift `DesignTokens` | both, kept in sync |
