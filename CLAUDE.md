@@ -35,7 +35,7 @@
 ## AI Agent Rules (Claude Code)
 - **Context Management**: Do NOT scan `DerivedData/` or `.swiftpm/`.
 - **State Update**: After every successful task, update `implementation-plan.md` (changelog) with progress and "Known Issues"; also update `docs/product/backlog.md` and `docs/architecture/tech-spec.md` when scope or design shifts.
-- **Design-before-build**: for user-facing work, the screen's UX-design item (Figma frame signed off + `ui-spec.md` section) must be `✅` before the build story starts. Pipeline: `docs/process/design-workflow.md`. The `figma` MCP (Dev Mode, `http://127.0.0.1:3845/mcp`) is *read-only* — designs originate in Figma; Claude reads frames and implements SwiftUI to match.
+- **Design-before-build**: for user-facing work, the screen's UX-design item (Figma frame signed off + `ui-spec.md` section) must be `✅` before the build story starts. Pipeline: `docs/process/design-workflow.md`. The `figma` MCP (official hosted plugin) is **bidirectional** — Claude can read frames (→ SwiftUI) **and** generate/edit Figma designs. **Always load the matching `/figma-*` skill before a write tool** (`use_figma` / `generate_figma_design` / `create_new_file`); for SwiftUI↔Figma use `/figma-swiftui`.
 - **Refactoring**: If you see a way to reduce code complexity by >20%, propose it before implementation.
 - **Safety**: Do not modify `Entitlements` or `Info.plist` without explicit confirmation.
 - **Supabase ops**: Use the `Makefile` targets (`make db-push`, `make functions-deploy FN=...`, etc.) instead of raw `supabase` invocations. The CLI is installed; do NOT run `supabase login` / `supabase link` yourself — those are user-interactive one-time setup. See `docs/SUPABASE_SETUP.md`.

@@ -11,7 +11,8 @@
 1. Requirements   PRD.md — vision, MOAT, the user outcome
         │
 2. UX design      Figma — flows → wireframes → hi-fi screens, on the design system
-        │         (created in Figma by Minh / Figma "First Draft"; Claude advises)
+        │         (Claude can generate frames into Figma via the MCP, or Minh
+        │          designs by hand — either way the PO signs off in step 3)
         │
 3. Design review  PO (Minh) signs off the Figma frames; open forks resolved.
    & sign-off     Hard-to-reverse calls → ADR in architecture/decisions.md
@@ -39,20 +40,27 @@ design item is `✅` — meaning the Figma frame is signed off **and** its
 | Concern | Tool | Source of truth |
 |---|---|---|
 | Visual design (flows, screens, hi-fi) | **Figma** | the Figma file |
-| Figma → Claude handoff | **Figma Dev Mode MCP** (`http://127.0.0.1:3845/mcp`) | read-only; see below |
+| Figma ↔ Claude (both ways) | **Figma MCP** (official hosted plugin, `mcp.figma.com/mcp`) | read **and** write/generate; see below |
 | Code-facing screen spec | `ui-spec.md` | this repo |
 | Implementation | SwiftUI | `Sources/` |
 | Design tokens | Figma variables → mirrored as Swift `DesignTokens` | both, kept in sync |
 
-### Figma Dev Mode MCP — what it does and doesn't
-- **Does:** read a *selected* frame's structure, variables/tokens, layout, and
-  generate SwiftUI/code context from an **existing** Figma design.
-- **Doesn't:** author or create new Figma files. Designs originate **in Figma**.
-- **Setup:** Figma desktop → Preferences → *Enable Dev Mode MCP Server*; the
-  `figma` MCP server is already registered in this project. Restart Claude Code
-  after enabling so the tools load.
-- **Workflow:** Minh selects a frame in Figma → Claude reads it via MCP →
-  implements the SwiftUI to match → records the node link in `ui-spec.md`.
+### Figma MCP — read **and** write (official hosted plugin)
+Installed as the `figma` plugin (hosted server `https://mcp.figma.com/mcp`).
+Bridges code ↔ design **both directions**. (The earlier local Dev Mode server —
+which *was* read-only — has been removed; this plugin supersedes it.)
+- **Read (design → code):** `get_design_context`, `get_screenshot`,
+  `get_metadata`, `get_variable_defs` — pull a frame's structure/tokens to
+  implement SwiftUI to match.
+- **Write / generate (code or intent → design):** `generate_figma_design`,
+  `create_new_file`, `use_figma`, `upload_assets` — Claude can **create and edit
+  Figma files**. **Mandatory:** load the matching skill *before* the write tool —
+  `/figma-create-new-file`, `/figma-generate-design`, `/figma-generate-library`,
+  `/figma-use`, or `/figma-swiftui` (the SwiftUI↔Figma translator).
+- **Workflow (either origin):** ① Claude generates frames into Figma from
+  `ui-spec.md`/intent → PO reviews → tweak; **or** ② Minh designs in Figma →
+  Claude reads via MCP. Either way: sign-off → record the Figma node link in
+  `ui-spec.md` → build SwiftUI → verify fidelity.
 
 ## Design system (the substrate — EPIC-UI)
 Built once, reused everywhere. Lives as Figma variables **and** a Swift

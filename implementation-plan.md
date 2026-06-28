@@ -271,9 +271,11 @@ Strategic shift: WillPower differentiates as an **emotional memory vault**, not 
   (13 new). Harness-first: `HabitEntryTests` + `HabitStreakTests` written red
   first. Next: 5b Today screen → 5c sync/widget/intent cutover → 5d teardown +
   store reset.
-- **Process — UI/UX made a first-class phase** (2026-06-28): wired the **Figma
-  Dev Mode MCP** (`figma`, local config, read-only — designs originate in Figma,
-  Claude reads/implements). New [`docs/process/design-workflow.md`](docs/process/design-workflow.md)
+- **Process — UI/UX made a first-class phase** (2026-06-28): connected the
+  **official Figma MCP** (hosted plugin `mcp.figma.com/mcp`) — **bidirectional**:
+  Claude reads frames (→ SwiftUI) and generates/edits Figma designs via the
+  `/figma-*` skills. (First added a local Dev Mode server, read-only; replaced by
+  the hosted plugin and removed.) New [`docs/process/design-workflow.md`](docs/process/design-workflow.md)
   defines the E2E pipeline (Requirements → Figma → review → `ui-spec.md` → build
   harness-first → visual QA). Added `docs/product/ui-spec.md`; **design-before-
   build gate** added to DoR/DoD (`scrum.md`); backlog now splits every screen
