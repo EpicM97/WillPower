@@ -20,15 +20,32 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 | 0.3 | **Remove the budget engine** — peripheral machinery (day-window/notifications/budget-settings, interruption injector, discipline scoring, evening prompt/ritual) removed across inc 1–4, all green. The **core** (`BudgetRecalculator`, `DailySession` budget shape, budget card/“min to go”, `HabitKind`/anchored, `MinutesField`/`MinutesInput`, compression) **folds into Sprint 1 §1.1** — it can't be deleted without the replacement model. | L | 🟡 core → S1 |
 | 0.4 | Wire the QC stack (XCTest keep + Maestro smoke harness) per QC doc | M | 🔵 owed |
 
+> **Design-before-build convention (UI work).** Every user-facing story is split
+> into a **UX design** item (layout/flow decision, benchmarked against TickTick/
+> Habitify/Things3 — output: a sketch + the open forks resolved) and a **build**
+> item. A build item is not `🔵 ready` until its design item is `✅`. Design
+> decisions get recorded in [`../architecture/decisions.md`](../architecture/decisions.md)
+> when hard-to-reverse, and the screen spec in `docs/product/ui-spec.md`.
+
+## EPIC-UI — App shell & design system  *(Sprint 1, foundational)*
+| ID | Story | Size | Status |
+|----|-------|------|--------|
+| UI.1 | App shell & navigation: tab structure (Today · Diary · Stats · Profile) + root routing; replace the budget-era `DailyDeckView` entry point. | M | 🔵 |
+| UI.2 | Design tokens: color / type / spacing scale, light+dark; the substrate EPIC-6 theming plugs into. | M | 🔵 |
+| UI.3 | Reusable components: habit row, check-off control, count stepper, routine section header, empty/rest-state. | M | 🔵 |
+| UI.4 | Loading / empty / error state conventions across screens. | S | 🔵 |
+
 ## EPIC-1 — Habits & Routines (core loop)  *(Sprint 1)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
 | 1.1 | `Habit` model reshape: `type` (check-in \| count), `category` (health \| lifestyle), `routines: [Routine]`, optional location. Drop budget fields. **inc 5a done** (model + `HabitEntry` + repo added *additively*, 163 green); budget-field drop + store reset → inc 5d. | M | 🟡 5a✅ |
 | 1.2 | `Routine` = time-of-day bucket (Morning/Noon/Afternoon/Evening); a habit can be in 1+. **Done** (`Routine` enum, inc 5a). | S | ✅ |
-| 1.3 | Today screen: habits grouped by routine bucket; check-off + count increment. | M | 🔵 |
-| 1.4 | Streaks + completion % per habit. | M | 🔵 |
-| 1.5 | Reminders/notifications per habit. | M | 🔵 |
-| 1.6 | Add/edit/archive habit (clean add-flow; learn from competitors' add-button placement). | M | 🔵 |
+| 1.3 | **Today screen — UX design**: routine-grouped layout, check-off vs count-stepper rows, ordering, empty/all-done state. Output: sketch + forks resolved. *(← the decision I jumped ahead on.)* | S | 🔵 |
+| 1.4 | **Today screen — build**: `TodayViewModel` + view over `HabitEntry`, grouped by routine, lazy entry creation on first interaction (inc 5b). | M | 🔵 |
+| 1.5 | **Add/Edit habit — UX design**: add-button placement, form fields (title/type/target/category/routines/reminder), validation; benchmark competitors' add-flow. | S | 🔵 |
+| 1.6 | **Add/Edit/Archive habit — build**: form + `HabitEditorViewModel` reshape. | M | 🔵 |
+| 1.7 | Streaks + completion % per habit — surfaced in Today + habit detail (logic = `HabitStreak`, done 5a; this is the surfacing). | M | 🔵 |
+| 1.8 | Reminders / notifications per habit. | M | 🔵 |
 
 **Acceptance (epic):** create a habit, see it under the right routine, check it off, watch the streak grow; survives relaunch.
 

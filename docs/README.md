@@ -8,6 +8,7 @@ docs/
 ├── product/
 │   ├── PRD.md              ⭐ Shared product brief & plan (vision, MOAT, features, roadmap) — edit together
 │   ├── backlog.md          Product backlog (memory-vault MVP: epics → stories)
+│   ├── ui-spec.md          Screen-by-screen UX decisions (design-before-build)
 │   └── test-plan.md        Manual QA test pass (legacy budget-era — to be refreshed)
 ├── process/
 │   ├── scrum.md            SDLC + Scrum (cadence, DoR/DoD, sprint plan)
