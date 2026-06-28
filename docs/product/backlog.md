@@ -23,8 +23,8 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 ## EPIC-1 — Habits & Routines (core loop)  *(Sprint 1)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
-| 1.1 | `Habit` model reshape: `type` (check-in \| count), `category` (health \| lifestyle), `routines: [Routine]`, optional location. Drop budget fields. | M | 🔵 |
-| 1.2 | `Routine` = time-of-day bucket (Morning/Noon/Afternoon/Evening); a habit can be in 1+. | S | 🔵 |
+| 1.1 | `Habit` model reshape: `type` (check-in \| count), `category` (health \| lifestyle), `routines: [Routine]`, optional location. Drop budget fields. **inc 5a done** (model + `HabitEntry` + repo added *additively*, 163 green); budget-field drop + store reset → inc 5d. | M | 🟡 5a✅ |
+| 1.2 | `Routine` = time-of-day bucket (Morning/Noon/Afternoon/Evening); a habit can be in 1+. **Done** (`Routine` enum, inc 5a). | S | ✅ |
 | 1.3 | Today screen: habits grouped by routine bucket; check-off + count increment. | M | 🔵 |
 | 1.4 | Streaks + completion % per habit. | M | 🔵 |
 | 1.5 | Reminders/notifications per habit. | M | 🔵 |

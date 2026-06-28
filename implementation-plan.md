@@ -251,6 +251,27 @@ Strategic shift: WillPower differentiates as an **emotional memory vault**, not 
 
 **Owed follow-ups** (small, surfaced for the test pass): anchored *timeline placement* (sort/clock-ordered deck view) — stored+synced but not yet sorted by; on-device journal AI (parked, north-star); journal share-grant decryption (parked).
 
+## Pivot — Memory-vault rewrite (Sprint 0–1, 2026-06)
+
+> Budget engine scrapped; see [`docs/product/PRD.md`](docs/product/PRD.md) +
+> [`docs/product/backlog.md`](docs/product/backlog.md).
+
+- **Sprint 0 — teardown** ✅ (inc 1–4): removed `BudgetCalculator`, day-window /
+  notifications / budget-settings + evening prompt, interruption injector,
+  discipline scoring + `EveningRitualView`. Streaks rewired to `StreakCalculator`.
+  150 tests green; CI green. The budget *core* deferred to S1 §1.1 (can't drop
+  `DailySession`'s shape without the replacement model).
+- **Sprint 1 §1.1 inc 5a — new habit model (additive)** ✅: added `HabitType`
+  (checkIn/count), `HabitCategory` (health/lifestyle), `Routine` (Morning/Noon/
+  Afternoon/Evening time buckets), and `HabitEntry` (one per-habit-per-day
+  completion record, replaces `DailySession`). `Habit` gained type/target/
+  category/routines/archivedAt; `entries` relationship; repo gained entry
+  CRUD; `HabitStreak` computes per-habit daily streaks (any missed day breaks).
+  Added **alongside** budget fields so nothing breaks yet. **163 tests green**
+  (13 new). Harness-first: `HabitEntryTests` + `HabitStreakTests` written red
+  first. Next: 5b Today screen → 5c sync/widget/intent cutover → 5d teardown +
+  store reset.
+
 ## Backlog / Ops
 - **AI habit-budget workflow (parked, big feature)**: Habits are streak items (did/didn't), not tasks — don't auto-defer (deferral/"Bumped" already removed in Phase 20.1). Leave the compression engine in `BudgetRecalculator` (the "(was XX)" shrink) AS-IS until this lands. Plan: (1) habit-config screen lets durations exceed budget (no blocking); user duration becomes the "(was XX)" bracket. (2) live "remaining budget" signal while editing. (3) post-config AI pass scans for over-budget and proposes a full revised duration list via interactive wizard — suggested value shown before the bracket, reusing the "XX (was YY)" display. (4) per-habit approve / keep-as-is before landing in Up next. (5) likely a post-onboarding tutorial + master habit-config input feeding Today. Discuss before building.
 - Manual: update Magic Link email template at `https://supabase.com/dashboard/project/<project-ref>/auth/templates` to use `{{ .Token }}`.

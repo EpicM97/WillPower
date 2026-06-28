@@ -86,6 +86,25 @@ final class SwiftDataRepository: DataRepository {
         ))
     }
 
+    // MARK: Entries
+
+    func fetchEntries(on day: Date) async throws -> [HabitEntry] {
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: day)
+        let end = calendar.date(byAdding: .day, value: 1, to: start) ?? start
+        return try fetch(FetchDescriptor<HabitEntry>(
+            predicate: #Predicate {
+                $0.date >= start && $0.date < end && $0.deletedAt == nil
+            }
+        ))
+    }
+
+    func fetchEntries(for habit: Habit) async throws -> [HabitEntry] {
+        habit.entries
+            .filter { $0.deletedAt == nil }
+            .sorted { $0.date < $1.date }
+    }
+
     // MARK: Mutations
 
     func add(objective: Objective) async throws {
@@ -127,12 +146,19 @@ final class SwiftDataRepository: DataRepository {
         try persist()
     }
 
+    func add(entry: HabitEntry) async throws {
+        entry.updatedAt = .now
+        context.insert(entry)
+        try persist()
+    }
+
     func delete(_ objective: Objective) async throws { try softDelete(objective) }
     func delete(_ keyResult: KeyResult) async throws { try softDelete(keyResult) }
     func delete(_ project: Project) async throws { try softDelete(project) }
     func delete(_ task: ProjectTask) async throws { try softDelete(task) }
     func delete(_ habit: Habit) async throws { try softDelete(habit) }
     func delete(_ session: DailySession) async throws { try softDelete(session) }
+    func delete(_ entry: HabitEntry) async throws { try softDelete(entry) }
 
     func save() async throws { try persist() }
 
@@ -146,6 +172,7 @@ final class SwiftDataRepository: DataRepository {
         case let t as ProjectTask: t.deletedAt = now; t.updatedAt = now
         case let h as Habit: h.deletedAt = now; h.updatedAt = now
         case let s as DailySession: s.deletedAt = now; s.updatedAt = now
+        case let e as HabitEntry: e.deletedAt = now; e.updatedAt = now
         default: break
         }
         try persist()

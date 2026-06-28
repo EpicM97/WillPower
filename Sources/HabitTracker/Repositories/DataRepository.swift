@@ -24,6 +24,10 @@ protocol DataRepository {
     func fetchSessions(on day: Date) async throws -> [DailySession]
     func fetchAllSessions() async throws -> [DailySession]
 
+    // MARK: Entries (memory-vault model)
+    func fetchEntries(on day: Date) async throws -> [HabitEntry]
+    func fetchEntries(for habit: Habit) async throws -> [HabitEntry]
+
     // MARK: Mutations
     func add(objective: Objective) async throws
     func add(keyResult: KeyResult, to objective: Objective) async throws
@@ -31,6 +35,7 @@ protocol DataRepository {
     func add(task: ProjectTask, to project: Project) async throws
     func add(habit: Habit) async throws
     func add(session: DailySession) async throws
+    func add(entry: HabitEntry) async throws
 
     func delete(_ objective: Objective) async throws
     func delete(_ keyResult: KeyResult) async throws
@@ -38,6 +43,7 @@ protocol DataRepository {
     func delete(_ task: ProjectTask) async throws
     func delete(_ habit: Habit) async throws
     func delete(_ session: DailySession) async throws
+    func delete(_ entry: HabitEntry) async throws
 
     func save() async throws
 }

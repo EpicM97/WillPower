@@ -5,6 +5,7 @@ final class MockRepository: DataRepository {
     private(set) var objectives: [Objective] = []
     private(set) var habits: [Habit] = []
     private(set) var sessions: [DailySession] = []
+    private(set) var entries: [HabitEntry] = []
     var errorOnNextWrite: RepositoryError?
 
     func fetchObjectives() async throws -> [Objective] {
@@ -50,6 +51,20 @@ final class MockRepository: DataRepository {
         sessions.filter { $0.deletedAt == nil }
     }
 
+    func fetchEntries(on day: Date) async throws -> [HabitEntry] {
+        let cal = Calendar.current
+        let start = cal.startOfDay(for: day)
+        let end = cal.date(byAdding: .day, value: 1, to: start) ?? start
+        return entries
+            .filter { $0.deletedAt == nil && $0.date >= start && $0.date < end }
+    }
+
+    func fetchEntries(for habit: Habit) async throws -> [HabitEntry] {
+        entries
+            .filter { $0.deletedAt == nil && $0.habit?.id == habit.id }
+            .sorted { $0.date < $1.date }
+    }
+
     func reorder(habits: [Habit]) async throws {
         try consumeInjectedError()
         for (index, habit) in habits.enumerated() { habit.order = index }
@@ -91,12 +106,21 @@ final class MockRepository: DataRepository {
         }
     }
 
+    func add(entry: HabitEntry) async throws {
+        try consumeInjectedError()
+        entries.append(entry)
+        if let habit = entry.habit {
+            habit.entries.append(entry)
+        }
+    }
+
     func delete(_ objective: Objective) async throws { try consumeInjectedError(); softDelete(objective) }
     func delete(_ keyResult: KeyResult) async throws { try consumeInjectedError(); softDelete(keyResult) }
     func delete(_ project: Project) async throws { try consumeInjectedError(); softDelete(project) }
     func delete(_ task: ProjectTask) async throws { try consumeInjectedError(); softDelete(task) }
     func delete(_ habit: Habit) async throws { try consumeInjectedError(); softDelete(habit) }
     func delete(_ session: DailySession) async throws { try consumeInjectedError(); softDelete(session) }
+    func delete(_ entry: HabitEntry) async throws { try consumeInjectedError(); softDelete(entry) }
 
     func save() async throws { try consumeInjectedError() }
 
@@ -109,6 +133,7 @@ final class MockRepository: DataRepository {
         case let t as ProjectTask: t.deletedAt = now; t.updatedAt = now
         case let h as Habit: h.deletedAt = now; h.updatedAt = now
         case let s as DailySession: s.deletedAt = now; s.updatedAt = now
+        case let e as HabitEntry: e.deletedAt = now; e.updatedAt = now
         default: break
         }
     }

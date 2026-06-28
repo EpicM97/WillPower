@@ -10,6 +10,7 @@ enum AppSchema {
         ProjectTask.self,
         Habit.self,
         DailySession.self,
+        HabitEntry.self,
         Journal.self
     ]
 
