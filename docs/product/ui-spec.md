@@ -1,10 +1,16 @@
 # UI Spec — memory-vault MVP
 
-Screen-by-screen UX decisions. Each screen's **UX design** backlog item
-(EPIC-UI / EPIC-1.3 / 1.5 / …) lands its sketch + resolved forks here **before**
-the matching build item starts. Benchmarks: TickTick, Habitify, Things3.
+Screen-by-screen UX decisions — the **code-facing** layer derived from the
+Figma design. Each screen's **UX design** backlog item (EPIC-UI / 1.3 / 1.5 / …)
+lands its signed-off Figma frame link + resolved forks + token usage here
+**before** the matching build item starts. Pipeline:
+[`../process/design-workflow.md`](../process/design-workflow.md). Benchmarks:
+TickTick, Habitify, Things3.
 
-Status per screen: 🔵 design pending · ✏️ in design · ✅ design locked → build.
+- **Figma file:** _TBD — paste the WillPower Figma file URL here once created._
+- **Visual source of truth:** Figma. **This doc** translates it for SwiftUI.
+
+Status per screen: 🔵 design pending · ✏️ in design (Figma) · ✅ design locked → build.
 
 ---
 

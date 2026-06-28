@@ -271,6 +271,14 @@ Strategic shift: WillPower differentiates as an **emotional memory vault**, not 
   (13 new). Harness-first: `HabitEntryTests` + `HabitStreakTests` written red
   first. Next: 5b Today screen → 5c sync/widget/intent cutover → 5d teardown +
   store reset.
+- **Process — UI/UX made a first-class phase** (2026-06-28): wired the **Figma
+  Dev Mode MCP** (`figma`, local config, read-only — designs originate in Figma,
+  Claude reads/implements). New [`docs/process/design-workflow.md`](docs/process/design-workflow.md)
+  defines the E2E pipeline (Requirements → Figma → review → `ui-spec.md` → build
+  harness-first → visual QA). Added `docs/product/ui-spec.md`; **design-before-
+  build gate** added to DoR/DoD (`scrum.md`); backlog now splits every screen
+  into a design item + build item (EPIC-UI + `x.0` rows); ADR-007 records it;
+  `CLAUDE.md` updated. No code change — planning/process only.
 
 ## Backlog / Ops
 - **AI habit-budget workflow (parked, big feature)**: Habits are streak items (did/didn't), not tasks — don't auto-defer (deferral/"Bumped" already removed in Phase 20.1). Leave the compression engine in `BudgetRecalculator` (the "(was XX)" shrink) AS-IS until this lands. Plan: (1) habit-config screen lets durations exceed budget (no blocking); user duration becomes the "(was XX)" bracket. (2) live "remaining budget" signal while editing. (3) post-config AI pass scans for over-budget and proposes a full revised duration list via interactive wizard — suggested value shown before the bracket, reusing the "XX (was YY)" display. (4) per-habit approve / keep-as-is before landing in Up next. (5) likely a post-onboarding tutorial + master habit-config input feeding Today. Discuss before building.

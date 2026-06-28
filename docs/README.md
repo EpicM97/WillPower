@@ -12,6 +12,7 @@ docs/
 │   └── test-plan.md        Manual QA test pass (legacy budget-era — to be refreshed)
 ├── process/
 │   ├── scrum.md            SDLC + Scrum (cadence, DoR/DoD, sprint plan)
+│   ├── design-workflow.md  UI/UX pipeline (Figma → review → spec → build → QA)
 │   └── qa-test-automation.md  QC tooling research & recommendation
 ├── architecture/
 │   ├── overview.md         Layers, tech stack, folder layout
@@ -28,6 +29,8 @@ docs/
 | You want… | Read |
 |---|---|
 | What to build next | [product/backlog.md](product/backlog.md) |
+| How design → code flows | [process/design-workflow.md](process/design-workflow.md) |
+| Per-screen UX decisions | [product/ui-spec.md](product/ui-spec.md) |
 | What to manually test | [product/test-plan.md](product/test-plan.md) |
 | How a system works | [architecture/tech-spec.md](architecture/tech-spec.md) |
 | Why we chose X | [architecture/decisions.md](architecture/decisions.md) |

@@ -24,6 +24,8 @@
 ## Documentation (SDLC layout)
 - **`implementation-plan.md`** — engineering **changelog** (history; keep appending per the rule below).
 - **`docs/product/backlog.md`** — forward work (now / next / later / open QA / ops).
+- **`docs/product/ui-spec.md`** — per-screen UX decisions (code-facing, derived from Figma).
+- **`docs/process/design-workflow.md`** — the E2E UI/UX pipeline (Figma → review → spec → build → visual QA).
 - **`docs/product/test-plan.md`** — manual QA test pass.
 - **`docs/architecture/tech-spec.md`** — current-state system design; **keep accurate** when systems change.
 - **`docs/architecture/decisions.md`** — ADRs; add one per hard, hard-to-reverse decision.
@@ -33,6 +35,7 @@
 ## AI Agent Rules (Claude Code)
 - **Context Management**: Do NOT scan `DerivedData/` or `.swiftpm/`.
 - **State Update**: After every successful task, update `implementation-plan.md` (changelog) with progress and "Known Issues"; also update `docs/product/backlog.md` and `docs/architecture/tech-spec.md` when scope or design shifts.
+- **Design-before-build**: for user-facing work, the screen's UX-design item (Figma frame signed off + `ui-spec.md` section) must be `✅` before the build story starts. Pipeline: `docs/process/design-workflow.md`. The `figma` MCP (Dev Mode, `http://127.0.0.1:3845/mcp`) is *read-only* — designs originate in Figma; Claude reads frames and implements SwiftUI to match.
 - **Refactoring**: If you see a way to reduce code complexity by >20%, propose it before implementation.
 - **Safety**: Do not modify `Entitlements` or `Info.plist` without explicit confirmation.
 - **Supabase ops**: Use the `Makefile` targets (`make db-push`, `make functions-deploy FN=...`, etc.) instead of raw `supabase` invocations. The CLI is installed; do NOT run `supabase login` / `supabase link` yourself — those are user-interactive one-time setup. See `docs/SUPABASE_SETUP.md`.

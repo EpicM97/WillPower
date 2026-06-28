@@ -20,16 +20,21 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 | 0.3 | **Remove the budget engine** — peripheral machinery (day-window/notifications/budget-settings, interruption injector, discipline scoring, evening prompt/ritual) removed across inc 1–4, all green. The **core** (`BudgetRecalculator`, `DailySession` budget shape, budget card/“min to go”, `HabitKind`/anchored, `MinutesField`/`MinutesInput`, compression) **folds into Sprint 1 §1.1** — it can't be deleted without the replacement model. | L | 🟡 core → S1 |
 | 0.4 | Wire the QC stack (XCTest keep + Maestro smoke harness) per QC doc | M | 🔵 owed |
 
-> **Design-before-build convention (UI work).** Every user-facing story is split
-> into a **UX design** item (layout/flow decision, benchmarked against TickTick/
-> Habitify/Things3 — output: a sketch + the open forks resolved) and a **build**
-> item. A build item is not `🔵 ready` until its design item is `✅`. Design
-> decisions get recorded in [`../architecture/decisions.md`](../architecture/decisions.md)
-> when hard-to-reverse, and the screen spec in `docs/product/ui-spec.md`.
+> **Design-before-build convention (all UI work).** Every user-facing story is
+> split into a **UX design** item (Figma frames + flow decisions, benchmarked
+> against TickTick/Habitify/Things3 — output: signed-off frame + open forks
+> resolved) and a **build** item. A build item is not `🔵 ready` until its design
+> item is `✅`. Pipeline: [`../process/design-workflow.md`](../process/design-workflow.md).
+> Screen spec → [`ui-spec.md`](ui-spec.md); hard-to-reverse calls →
+> [`../architecture/decisions.md`](../architecture/decisions.md). The `D` rows
+> below (UI.0 / x.0) are the design items; this convention applies to **every**
+> epic with screens, including the Sprint 2–3 epics whose design items are added
+> as they enter a sprint.
 
 ## EPIC-UI — App shell & design system  *(Sprint 1, foundational)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
+| UI.0 | **Design pass (Figma)**: app-shell layout + design-system sheet (color/type/spacing tokens light+dark, components: habit row, check control, count stepper, routine header, empty/error/loading states). Sign-off → `ui-spec.md` + token table. | M | 🔵 |
 | UI.1 | App shell & navigation: tab structure (Today · Diary · Stats · Profile) + root routing; replace the budget-era `DailyDeckView` entry point. | M | 🔵 |
 | UI.2 | Design tokens: color / type / spacing scale, light+dark; the substrate EPIC-6 theming plugs into. | M | 🔵 |
 | UI.3 | Reusable components: habit row, check-off control, count stepper, routine section header, empty/rest-state. | M | 🔵 |
@@ -52,6 +57,7 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 ## EPIC-2 — Mood  *(Sprint 2)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
+| 2.0 | **Design pass (Figma)**: mood-capture UI (5-pt picker + note), where it surfaces after a routine. → `ui-spec.md`. | S | 🟡 |
 | 2.1 | `Mood` model: 5-pt scale (Euphoric>Happy>Neutral>Sad>Horrible). | S | 🔵 |
 | 2.2 | Capture mood after a routine is completed + optional note. | M | 🔵 |
 | 2.3 | Surface mood in end-of-day flow + stats. | S | 🟡 |
@@ -59,6 +65,7 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 ## EPIC-3 — Private diary (E2EE + Face ID)  *(Sprint 2)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
+| 3.0 | **Design pass (Figma)**: diary list + entry composer + Face ID lock screen + attachment UI. → `ui-spec.md`. | M | 🟡 |
 | 3.1 | Reuse `JournalCrypto`/`JournalKeyStore`; confirm AES-GCM + Secure-Enclave key. | S | 🔵 |
 | 3.2 | **Face ID / PIN gate** (LocalAuthentication) to open the diary. | M | 🔵 |
 | 3.3 | Diary entry composer with image attachments (encrypted at rest). | L | 🟡 |
@@ -66,16 +73,19 @@ Size: S (≈½ day) · M (1–2 days) · L (3+ days)
 ## EPIC-4 — On-this-day & Memories  *(Sprint 3)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
+| 4.0 | **Design pass (Figma)**: memory rewind UI (on-this-day card, memory browse). → `ui-spec.md`. | S | 🟡 |
 | 4.1 | Reuse `OnThisDaySelector` + `MemoriesView`; rewind by creation date / first achievement / memory. | M | 🔵 |
 
 ## EPIC-5 — Statistics  *(Sprint 3)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
+| 5.0 | **Design pass (Figma)**: stats screens (habit performance + mood; day/week/month/year), chart styles. → `ui-spec.md`. | M | 🟡 |
 | 5.1 | Native (not web-view) stats: habit performance + mood, daily/weekly/monthly/yearly. | L | 🔵 |
 
 ## EPIC-6 — Theme switcher  *(Sprint 3)*
 | ID | Story | Size | Status |
 |----|-------|------|--------|
+| 6.0 | **Design pass (Figma)**: theme picker UI (stock themes, local photo, light/dark) over UI.2 tokens. → `ui-spec.md`. | S | 🟡 |
 | 6.1 | Reuse background/theme system: stock themes + local photos + light/dark. | M | 🔵 |
 
 ## EPIC-7 — On-device recall plumbing (MVP foundation for V1 AI)  *(Sprint 3, stretch)*

@@ -39,3 +39,9 @@ One entry per hard, hard-to-reverse decision. Newest at the bottom.
 **Context** A day window (start/end) is *not* a habit budget. The 9-5 / sleep / meals are fixed blocks subtracted from the day, not things you "budget."
 **Decision** `discretionary budget = window − fixed blocks − ~0 moment-habits`, but it stays an **explicit user input** (default 120; AI may default it later). Never auto-equate budget to window length. Habit-kind is the structural prerequisite (duration consumes, moment≈0, anchored=fixed block).
 **Consequences** `DayWindow.budgetMinutes` is separate from `lengthMinutes`. The day window drives nudges + anchors, not the budget number.
+
+## ADR-007 — Design-before-build with Figma as the visual source of truth
+**Date** 2026-06-28 · **Status** Accepted
+**Context** UI/UX was not a tracked phase — screens were smuggled into logic stories, leading to building Today off an un-reviewed layout. Commercializing means UI quality is a feature, not an afterthought.
+**Decision** Every user-facing story splits into a **UX-design item** (Figma frame + flow, signed off) and a **build item**; the build item is not DoR-ready until the design is `✅` and its `ui-spec.md` section exists. Figma is the **visual source of truth**; `ui-spec.md` is the code-facing translation. Figma↔Claude handoff is the **Dev Mode MCP** (`http://127.0.0.1:3845/mcp`), which is **read-only** — Claude reads existing frames and implements SwiftUI to match; it never authors Figma files. Pipeline: `docs/process/design-workflow.md`.
+**Consequences** Slower start per screen (design gate) but far less rework and a coherent design system. Designs must originate in Figma (Minh / Figma "First Draft"); the MCP cannot create them. Design tokens live in Figma variables **and** a Swift `DesignTokens` mirror — drift risk if not kept in sync.
